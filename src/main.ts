@@ -52,6 +52,10 @@ fastify.post('/v1/jobs', async (request: any, reply) => {
   reply.send({ status: 'OK' })
 })
 
+fastify.get('/', async (_request, reply) => {
+  reply.send({ status: 'OK' })
+})
+
 fastify.listen({ port: +PORT, host: '0.0.0.0' }, (err) => {
   if (err) throw err
 })
