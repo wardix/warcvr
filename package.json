@@ -1,0 +1,24 @@
+{
+  "name": "warcvr",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "fastify": "^4.23.2",
+    "fastify-amqp": "^1.1.0",
+    "fastify-amqp-async": "^1.0.1",
+    "fastify-rabbitmq": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.4",
+    "@types/node": "^20.6.3",
+    "typescript": "^5.2.2"
+  }
+}
