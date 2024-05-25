@@ -1,4 +1,4 @@
-import Fastify, { FastifyRequest, FastifyReply, FastifyInstance } from 'fastify'
+import Fastify, { FastifyRequest, FastifyReply } from 'fastify'
 import fastifyAmqp from 'fastify-amqp'
 import { config } from 'dotenv'
 
@@ -11,6 +11,7 @@ const AMQP_URL = process.env.AMQP_URL! || 'amqp://localhost'
 const JOB_EXCHANGE = process.env.JOB_EXCHANGE!
 const JOB_ROUTING_KEY = process.env.JOB_ROUTING_KEY!
 const JOB_QUEUE = process.env.JOB_QUEUE!
+const BODY_LIMIT = process.env.BODY_LIMIT || 1048576
 
 const apiKeys = JSON.parse(API_KEYS)
 const protectedRoutes = JSON.parse(PROTECTED_ROUTES)
@@ -22,7 +23,10 @@ const validateApiKey = async (request: FastifyRequest, reply: FastifyReply) => {
   }
 }
 
-const fastify = Fastify({ logger: true })
+const fastify = Fastify({
+  logger: true,
+  bodyLimit: +BODY_LIMIT,
+})
 
 fastify.addHook('preValidation', async (request, reply) => {
   for (const route of protectedRoutes) {
@@ -47,7 +51,7 @@ fastify.post('/v1/jobs', async (request: any, reply) => {
     JOB_EXCHANGE,
     JOB_ROUTING_KEY,
     Buffer.from(JSON.stringify(request.body)),
-    { persistent: true }
+    { persistent: true },
   )
   reply.send({ status: 'OK' })
 })
