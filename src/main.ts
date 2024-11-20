@@ -30,7 +30,7 @@ const fastify = Fastify({
 
 fastify.addHook('preValidation', async (request, reply) => {
   for (const route of protectedRoutes) {
-    if (!request.routeOptions.url.startsWith(route)) {
+    if (!request.routeOptions.url?.startsWith(route)) {
       continue
     }
     await validateApiKey(request, reply)
